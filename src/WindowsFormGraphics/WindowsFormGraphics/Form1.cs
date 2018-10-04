@@ -53,8 +53,8 @@ namespace WindowsFormGraphics
         {
             Debug.WriteLine("MainForm_Resize");
 
-            width = Size.Width;
-            height = Size.Height;
+            width = ClientRectangle.Width;
+            height = ClientRectangle.Height;
 
             Debug.WriteLine("window width: " + width + ", height: " + height);
         }
@@ -71,18 +71,28 @@ namespace WindowsFormGraphics
 
         private void DrawCircle(Graphics g)
         {
-            Pen pen = new Pen(Brushes.DeepSkyBlue);
+            Debug.WriteLine("DrawCircle");
+
+            SolidBrush brush = new SolidBrush(Color.Red);
+
+            Pen pen = new Pen(brush);
 
             Point point1 = new Point(0, 0);
             Point point2 = new Point(width / 2, height / 2);
 
-            int circleRadius = 100;
+            int limitSize = (width > height) ? height : width;
+
+            int circleRadius = (limitSize > 200) ? 100 : limitSize / 3;
+
+            Debug.WriteLine("limitSize=" + limitSize + ", circleRadius=" + circleRadius);
 
             g.DrawEllipse(pen,
                           width / 2 - circleRadius,
                           height / 2 - circleRadius,
                           circleRadius * 2,
                           circleRadius * 2);
+
+            brush.Dispose();
         }
     }
 }
