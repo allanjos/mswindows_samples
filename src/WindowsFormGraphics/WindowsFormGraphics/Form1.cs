@@ -238,7 +238,7 @@ namespace WindowsFormGraphics
 
                     // Ascending
 
-                    if ((squareAutonomousPoint.X + squareAutonomousSize.Width) <= width)
+                    if ((squareAutonomousPoint.X + squareAutonomousSize.Width) <= width - 5)
                     {
                         squareAutonomousPoint.X += squareAutonomousSize.Width;
                     }
