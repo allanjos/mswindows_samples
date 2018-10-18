@@ -23,6 +23,8 @@ namespace ThermalLabel
         private void Form1_Shown(object sender, EventArgs e)
         {
             comboBoxBarcodeType.SelectedIndex = 0;
+
+            comboBoxOrientation.SelectedIndex = 0;
         }
 
         private void printDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -43,26 +45,32 @@ namespace ThermalLabel
                     break;
             }
 
+            int width = Int32.Parse(textBoxBarcodeWidth.Text);
+            int height = Int32.Parse(textBoxBarcodeHeight.Text);
+
             IBarcodeWriter writer = new BarcodeWriter
             {
                 Format = barcodeFormat,
                 Options = new QrCodeEncodingOptions
                 {
-                    Width = 400, //pictureBox.Width,
-                    Height = 200, //pictureBox.Height
+                    Width = width,
+                    Height = height,
                 }
             };
 
-            //Image image = writer.Write("0600001000900000000MC17509TX0001");
             if (textBoxCode.Text.Length > 0)
             {
                 Image image = writer.Write(textBoxCode.Text);
 
-                image.RotateFlip(RotateFlipType.Rotate90FlipXY);
+                switch (comboBoxOrientation.SelectedIndex)
+                {
+                    // Portrait
+                    case 1:
+                        image.RotateFlip(RotateFlipType.Rotate90FlipXY);
+                        break;
+                }
 
                 graphics.DrawImage(image, new Point(0, 0));
-
-                //pictureBox.Image = writer.Write("0600001000900000000MC17509TX0001");
             }
         }
 
@@ -73,7 +81,32 @@ namespace ThermalLabel
 
         private void buttonGenerateBarcode_Click(object sender, EventArgs e)
         {
+            if (textBoxCode.Text.Length == 0)
+            {
+                toolStripStatusLabel.Text = "Inform a the code of barcode.";
+                return;
+            }
+
+            if (textBoxBarcodeWidth.Text.Length == 0 || Int32.Parse(textBoxBarcodeWidth.Text) == 0)
+            {
+                toolStripStatusLabel.Text = "Inform a positive value for barcode width.";
+                return;
+            }
+
+            if (textBoxBarcodeHeight.Text.Length == 0 || Int32.Parse(textBoxBarcodeHeight.Text) == 0)
+            {
+                toolStripStatusLabel.Text = "Inform a positive value for barcode height.";
+                return;
+            }
+
+            toolStripStatusLabel.Text = "";
+
             printPreviewControl.InvalidatePreview();
+        }
+
+        private void textBoxBarcodeHeight_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
