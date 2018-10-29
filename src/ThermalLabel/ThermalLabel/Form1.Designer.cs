@@ -107,7 +107,8 @@
             this.comboBoxBarcodeType.FormattingEnabled = true;
             this.comboBoxBarcodeType.Items.AddRange(new object[] {
             "CODE128",
-            "QRCODE"});
+            "QRCODE",
+            "PDF417"});
             this.comboBoxBarcodeType.Location = new System.Drawing.Point(291, 38);
             this.comboBoxBarcodeType.Name = "comboBoxBarcodeType";
             this.comboBoxBarcodeType.Size = new System.Drawing.Size(165, 21);

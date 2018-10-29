@@ -43,6 +43,9 @@ namespace ThermalLabel
                 case 1:
                     barcodeFormat = BarcodeFormat.QR_CODE;
                     break;
+                case 2:
+                    barcodeFormat = BarcodeFormat.PDF_417;
+                    break;
             }
 
             int width = Int32.Parse(textBoxBarcodeWidth.Text);
